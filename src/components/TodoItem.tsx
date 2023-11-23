@@ -6,12 +6,13 @@ import { ITask } from "../interface/ITask";
 type ToDoItemProps = {
   toDo: ITask;
   deleteTask: (id: string) => void;
+  completeTask:(id:string) => void;
 };
-const TodoItem = ({ toDo, deleteTask }: ToDoItemProps) => {
-  const { id, name } = toDo;
+const TodoItem = ({ toDo, deleteTask, completeTask }: ToDoItemProps) => {
+  const { id, name, isDone } = toDo;
 
   return (
-    <li className=" w-2/3 p-2  border-2 rounded shadow-md flex justify-between ">
+          <li className={`${isDone? "bg-green-400": "bg-white"} w-2/3 p-2  border-2 rounded shadow-md flex justify-between `} >
       <p>{name}</p>
       <div className=" flex items-center gap-2 justify-center">
         <button>
@@ -20,9 +21,11 @@ const TodoItem = ({ toDo, deleteTask }: ToDoItemProps) => {
         <button onClick={() => deleteTask(id)}>
           <IoTrashOutline />
         </button>
-        <button>
+         {!isDone && (<button onClick={()=> completeTask(id)}>
+
           <MdDone />
-        </button>
+        </button>)
+        }
       </div>
     </li>
   );

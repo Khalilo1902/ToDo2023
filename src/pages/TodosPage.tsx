@@ -18,7 +18,7 @@ const TodoPage = () => {
       name: "TaskThree",
     },
   ]);
-  console.log(toDolist);
+  
   const addToDo = (newTodo: ITask) => {
     const updatedTodoList = [...toDolist, newTodo];
     setTodoList(updatedTodoList);
@@ -29,11 +29,31 @@ const TodoPage = () => {
     setTodoList(updateTodoList);
   };
 
+  const completeTask = (id: string)=> {
+     const toDo = toDolist.find(t => t.id === id);
+     if (toDo) {
 
+     
+     const completedToDo= {
+      ...toDo,
+      isDone : true 
+     }
+     
+     const filtredTodoList = toDolist.filter((todo) => todo.id !== id);
+     const updateTodoList=[
+      ...filtredTodoList,
+      completedToDo
+     ]
+    setTodoList(updateTodoList);
+  }
+     
+
+  }
   return (
     <div>
       <TodoForm addTodo={addToDo} />
-      <TodoList toDolist={toDolist} deleteTask={deleteTask} />
+      <TodoList toDolist={toDolist} deleteTask={deleteTask} completeTask ={completeTask} />
+      
     </div>
   );
 };
