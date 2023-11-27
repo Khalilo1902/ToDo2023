@@ -4,20 +4,9 @@ import TodoList from "../components/TodoList";
 import { ITask } from "../interface/ITask";
 
 const TodoPage = () => {
-  const [toDolist, setTodoList] = useState<ITask[]>([
-    {
-      id: "1",
-      name: "TaskOne",
-    },
-    {
-      id: "2",
-      name: "TaskTwo",
-    },
-    {
-      id: "3",
-      name: "TaskThree",
-    },
-  ]);
+  const [toDolist, setTodoList] = useState<ITask[]>([]);
+  console.log(toDolist);
+  
   
   const addToDo = (newTodo: ITask) => {
     const updatedTodoList = [...toDolist, newTodo];

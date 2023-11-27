@@ -11,7 +11,11 @@ const TodoForm = ({addTodo }: ToDoFormProps) => {
   const [toDoName, setToDoName] = useState("");
 
 const submitHandler = ()=>{
-  const newTodo:ITask = {id:uuidv4(),name:toDoName}
+  const newTodo:ITask = {
+    id:uuidv4(),
+    name:toDoName,
+    createdAt: new Date()
+  }
   addTodo(newTodo)
   setToDoName("")
 }
