@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { ITask } from "../interface/ITask";
+import axios from "axios";
 
 const TodoPage = () => {
   const [toDolist, setTodoList] = useState<ITask[]>([]);
@@ -9,56 +10,46 @@ const TodoPage = () => {
   
   
   const addToDo = (newTodo: ITask) => {
-    const updatedTodoList = [...toDolist, newTodo];
-    setTodoList(updatedTodoList);
+    axios.post('http://localhost:4008/api/task/create',{task: newTodo.task}).then(()=> fetchTasks())
   };
 
   const deleteTask = (id: string) => {
-    const updateTodoList = toDolist.filter((todo) => todo.id !== id);
-    setTodoList(updateTodoList);
+    axios.delete("http://localhost:4008/api/task/delete/"+id).then(()=> fetchTasks())
   };
 
   const completeTask = (id: string)=> {
-     const toDo = toDolist.find(t => t.id === id);
-     if (toDo) {
-
-     
-     const completedToDo= {
-      ...toDo,
-      isDone : true 
-     }
-     
-     const filtredTodoList = toDolist.filter((todo) => todo.id !== id);
-     const updateTodoList=[
-      ...filtredTodoList,
-      completedToDo
-     ]
-    setTodoList(updateTodoList);
+    axios.put('http://localhost:4008/api/task/update/'+id, {isDone: true}).then(()=> fetchTasks())
   }
      
-
-  }
-
   const updateTask = (id: string,newName:string)=> {
-    const toDo = toDolist.find(t => t.id === id);
-    if (toDo) {
+    axios.put('http://localhost:4008/api/task/update/'+id, {task: newName}).then(()=> fetchTasks())
+  }
 
-    
-    const completedToDo= {
-     ...toDo,
-    name:newName
+ const fetchTasks =async () => {
+    try {
+      const res = await axios.get('http://localhost:4008/api/task/display');
+      if(res.data && res.data.length> 0) {
+        setTodoList(res.data);
+      }else {
+        setTodoList([]);
+      }
+    } catch (err) {
+      console.error(err)
     }
-    
-    const filtredTodoList = toDolist.filter((todo) => todo.id !== id);
-    const updateTodoList=[
-     ...filtredTodoList,
-     completedToDo
-    ]
-   setTodoList(updateTodoList);
  }
-    
 
- }
+ useEffect(()=>{
+  fetchTasks()
+  // axios.get('http://localhost:4008/api/task/display')
+  //       .then((res) => {
+  //         if (res.data && res.data.length> 0) {
+  //           setTodoList(res.data);
+  //         } else {
+  //           setTodoList([]);
+  //         }
+  //       })
+  //       .catch((err) => console.error(err))
+ },[]);
 
   return (
     <div>

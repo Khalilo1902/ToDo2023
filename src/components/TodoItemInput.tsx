@@ -10,7 +10,7 @@ type TodoItemInputProps = {
 };
 
 const TodoItemInput = ({ todoItem,updateTask ,setIsUpdate}: TodoItemInputProps) => {
-  const [newName, setNewName] = useState<string>(todoItem.name);
+  const [newName, setNewName] = useState<string>(todoItem.task);
   const handelUpdate =()=>{
     updateTask(todoItem.id,newName)
     setIsUpdate(false)

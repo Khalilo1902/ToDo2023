@@ -14,7 +14,7 @@ const TodoList = ({ toDolist,deleteTask,completeTask,updateTask}: ToDoListProps)
      <TodoItem/>
      <TodoItem/>
      <TodoItem/> */}
-      {toDolist.sort( (a, b) => a.createdAt.getTime() - b.createdAt.getTime()).map((todo) => (
+      {toDolist.map((todo) => (
         <TodoItem key={todo.id} toDo={todo} deleteTask={deleteTask} completeTask={completeTask} updateTask={updateTask}/>
       ))}
     </ul>

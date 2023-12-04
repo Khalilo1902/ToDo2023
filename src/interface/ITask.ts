@@ -1,6 +1,6 @@
 export interface ITask {
   id: string;
-  name: string;
+  task: string;
   isDone? : boolean;
-  createdAt: Date;
+  // createdAt: Date;
 }

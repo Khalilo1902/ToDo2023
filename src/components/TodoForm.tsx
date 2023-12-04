@@ -13,8 +13,7 @@ const TodoForm = ({addTodo }: ToDoFormProps) => {
 const submitHandler = ()=>{
   const newTodo:ITask = {
     id:uuidv4(),
-    name:toDoName,
-    createdAt: new Date()
+    task:toDoName
   }
   addTodo(newTodo)
   setToDoName("")
